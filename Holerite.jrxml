@@ -85,17 +85,17 @@ WHERE
 		<property name="com.jaspersoft.studio.field.tree.path" value="empresas"/>
 	</field>
 	<variable name="INSS_VALOR" class="java.lang.Double" resetType="Page">
-		<variableExpression><![CDATA[$F{salario}.doubleValue()<1556.95? $F{salario}.multiply(new BigDecimal(0.08)).doubleValue() : 
-$F{salario}.doubleValue()<2594.93? $F{salario}.multiply(new BigDecimal(0.09)).doubleValue() :
-$F{salario}.doubleValue()<5189.83? $F{salario}.multiply(new BigDecimal(0.11)).doubleValue() :
+		<variableExpression><![CDATA[$F{salario}.add($V{VALOR_BONUS}).doubleValue()<1556.95? $F{salario}.add($V{VALOR_BONUS}).multiply(new BigDecimal(0.08)).doubleValue() : 
+$F{salario}.add($V{VALOR_BONUS}).doubleValue()<2594.93? $F{salario}.add($V{VALOR_BONUS}).multiply(new BigDecimal(0.09)).doubleValue() :
+$F{salario}.add($V{VALOR_BONUS}).doubleValue()<5189.83? $F{salario}.add($V{VALOR_BONUS}).multiply(new BigDecimal(0.11)).doubleValue() :
 570.80]]></variableExpression>
 	</variable>
 	<variable name="IRRF_VALOR" class="java.lang.Double" resetType="Master" incrementType="Page">
-		<variableExpression><![CDATA[$F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 1903.99 ? 0.00:
-$F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 2826.65 ? $F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.075)).subtract(new BigDecimal( 142.80)).doubleValue(): 
-$F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 3751.06 ? $F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.15)).subtract(new BigDecimal( 354.80)).doubleValue():
-$F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 4664.69 ? $F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.225)).subtract(new BigDecimal( 636.13)).doubleValue():
-$F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.275)).subtract(new BigDecimal( 869.36)).doubleValue()
+		<variableExpression><![CDATA[$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 1903.99 ? 0.00:
+$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 2826.65 ? $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.075)).subtract(new BigDecimal( 142.80)).doubleValue(): 
+$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 3751.06 ? $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.15)).subtract(new BigDecimal( 354.80)).doubleValue():
+$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 4664.69 ? $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.225)).subtract(new BigDecimal( 636.13)).doubleValue():
+$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.275)).subtract(new BigDecimal( 869.36)).doubleValue()
 ]]></variableExpression>
 	</variable>
 	<variable name="TOTAL_VENCIMENTOS" class="java.math.BigDecimal" resetType="Master">
@@ -111,17 +111,17 @@ $F{salario}.subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal
 		<variableExpression><![CDATA[$V{TOTAL_VENCIMENTOS}.subtract($V{VALOR_DESCONTOS})]]></variableExpression>
 	</variable>
 	<variable name="PORCENTAGEM_INSS" class="java.lang.Double" resetType="Page" incrementType="Page">
-		<variableExpression><![CDATA[$F{salario}.doubleValue()<1556.95? 8.0:
-$F{salario}.doubleValue()<2594.92? 9.0:
-$F{salario}.doubleValue()<5189.83? 11.0:
+		<variableExpression><![CDATA[$F{salario}.add($V{VALOR_BONUS}).doubleValue()<1556.95? 8.0:
+$F{salario}.add($V{VALOR_BONUS}).doubleValue()<2594.92? 9.0:
+$F{salario}.add($V{VALOR_BONUS}).doubleValue()<5189.83? 11.0:
 0.0
 ]]></variableExpression>
 	</variable>
 	<variable name="PORCENTAGEM_IRFF" class="java.lang.Double">
-		<variableExpression><![CDATA[($F{salario}.doubleValue()-$V{INSS_VALOR})<=1903.98 ?0.0:
-($F{salario}.doubleValue()-$V{INSS_VALOR})<=2826.65 ? 7.5:
-($F{salario}.doubleValue()-$V{INSS_VALOR})<=5189.82 ?15:
-($F{salario}.doubleValue()-$V{INSS_VALOR})<=4664.68 ? 22.5:
+		<variableExpression><![CDATA[($F{salario}.add($V{VALOR_BONUS}).doubleValue()-$V{INSS_VALOR})<=1903.98 ?0.0:
+($F{salario}.add($V{VALOR_BONUS}).doubleValue()-$V{INSS_VALOR})<=2826.65 ? 7.5:
+($F{salario}.add($V{VALOR_BONUS}).doubleValue()-$V{INSS_VALOR})<=5189.82 ?15:
+($F{salario}.add($V{VALOR_BONUS}).doubleValue()-$V{INSS_VALOR})<=4664.68 ? 22.5:
 27.5]]></variableExpression>
 	</variable>
 	<variable name="SALARIO_VALOR" class="java.lang.Double">
@@ -389,7 +389,7 @@ $F{salario}.doubleValue()<5189.83? 11.0:
 				</textElement>
 				<text><![CDATA[___/___/______]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0.00;¤-#,##0.00">
+			<textField evaluationTime="Report" pattern="¤ #,##0.00;¤-#,##0.00">
 				<reportElement x="180" y="140" width="200" height="30" uuid="407e8895-1cb4-49b3-af48-f4d24aa23518"/>
 				<box padding="5"/>
 				<textElement textAlignment="Right"/>
