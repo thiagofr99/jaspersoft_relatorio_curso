@@ -3,31 +3,36 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Holerite" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1bd3ebda-3545-4ff8-9e40-2a60c777d568">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql UDEMY Data Adapter"/>
+	<parameter name="ID_FUNCIONARIO" class="java.math.BigDecimal"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT jaspercurso.funcionarios.nome,
-	jaspercurso.funcionarios.id_funcionario,
-	jaspercurso.departamentos.titulo AS departamento,
-	jaspercurso.cargos.titulo AS cargo,
-	jaspercurso.funcionarios.salario,
-	jaspercurso.funcionarios.data_admissao,
-	jaspercurso.niveis.nivel,
-	jaspercurso.niveis.bonus,
-	jaspercurso.empresas.razao_social,
-	jaspercurso.empresas.cnpj,
-	jaspercurso.empresas.telefone
-FROM jaspercurso.niveis,
-	jaspercurso.departamento_tem_cargos
-	INNER JOIN jaspercurso.departamentos ON 
-	 jaspercurso.departamento_tem_cargos.id_departamento = jaspercurso.departamentos.id_departamento 
-	INNER JOIN jaspercurso.cargos ON 
-	 jaspercurso.departamento_tem_cargos.id_cargo = jaspercurso.cargos.id_cargo 
-	INNER JOIN jaspercurso.funcionarios ON 
-	 jaspercurso.funcionarios.id_cargo = jaspercurso.departamento_tem_cargos.id_cargo ,
-	jaspercurso.empresas
-WHERE 
-	 jaspercurso.funcionarios.salario <>0
-	 
-	 ORDER BY jaspercurso.funcionarios.nome ASC]]>
+		<![CDATA[SELECT f.nome,
+	f.id_funcionario,
+	d.titulo AS departamento,
+	c.titulo AS cargo,
+	f.salario,
+	f.data_admissao,
+	n.nivel,
+	n.bonus,
+	e.razao_social,
+	e.cnpj,
+	e.telefone
+FROM 
+	jaspercurso.empresas e,
+	jaspercurso.funcionarios f
+INNER JOIN jaspercurso.cargos c ON 
+	f.id_cargo = c.id_cargo 
+INNER JOIN jaspercurso.departamento_tem_cargos dc ON
+	dc.id_cargo = c.id_cargo 
+INNER JOIN jaspercurso.departamentos d ON 
+	dc.id_departamento = d.id_departamento
+INNER JOIN jaspercurso.niveis n ON 
+	f.id_nivel = n.id_nivel
+WHERE
+	f.salario > 0 
+	AND
+	($P{ID_FUNCIONARIO} IS NULL OR $P{ID_FUNCIONARIO} = f.id_funcionario)
+GROUP BY f.id_funcionario 	
+ORDER BY f.nome ASC]]>
 	</queryString>
 	<field name="nome" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nome"/>
@@ -95,8 +100,7 @@ $F{salario}.add($V{VALOR_BONUS}).doubleValue()<5189.83? $F{salario}.add($V{VALOR
 $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 2826.65 ? $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.075)).subtract(new BigDecimal( 142.80)).doubleValue(): 
 $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 3751.06 ? $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.15)).subtract(new BigDecimal( 354.80)).doubleValue():
 $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).doubleValue() < 4664.69 ? $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.225)).subtract(new BigDecimal( 636.13)).doubleValue():
-$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.275)).subtract(new BigDecimal( 869.36)).doubleValue()
-]]></variableExpression>
+$F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).multiply(new BigDecimal( 0.275)).subtract(new BigDecimal( 869.36)).doubleValue()]]></variableExpression>
 	</variable>
 	<variable name="TOTAL_VENCIMENTOS" class="java.math.BigDecimal" resetType="Master">
 		<variableExpression><![CDATA[$V{VALOR_BONUS}.add($F{salario})]]></variableExpression>
@@ -114,8 +118,7 @@ $F{salario}.add($V{VALOR_BONUS}).subtract( new BigDecimal( $V{INSS_VALOR} ) ).mu
 		<variableExpression><![CDATA[$F{salario}.add($V{VALOR_BONUS}).doubleValue()<1556.95? 8.0:
 $F{salario}.add($V{VALOR_BONUS}).doubleValue()<2594.92? 9.0:
 $F{salario}.add($V{VALOR_BONUS}).doubleValue()<5189.83? 11.0:
-0.0
-]]></variableExpression>
+0.0]]></variableExpression>
 	</variable>
 	<variable name="PORCENTAGEM_IRFF" class="java.lang.Double">
 		<variableExpression><![CDATA[($F{salario}.add($V{VALOR_BONUS}).doubleValue()-$V{INSS_VALOR})<=1903.98 ?0.0:
