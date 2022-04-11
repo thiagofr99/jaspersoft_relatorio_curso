@@ -1,8 +1,10 @@
 eclipse.preferences.version=1
 encoding/Holerite.jrxml=UTF-8
+encoding/cargos-desafio.jrxml=UTF-8
 encoding/desafio-01.jrxml=UTF-8
 encoding/desafio-02.jrxml=UTF-8
 encoding/desafio-03.jrxml=UTF-8
+encoding/desafio-05.jrxml=UTF-8
 encoding/funcionarios-01.jrxml=UTF-8
 encoding/funcionarios-02.jrxml=UTF-8
 encoding/funcionarios-03.jrxml=UTF-8
@@ -22,3 +24,5 @@ encoding/funcionarios-15.jrxml=UTF-8
 encoding/funcionarios-16.jrxml=UTF-8
 encoding/funcionarios-17.jrxml=UTF-8
 encoding/funcionarios-18.jrxml=UTF-8
+encoding/funcionarios-19.jrxml=UTF-8
+encoding/total-departamento.jrxml=UTF-8

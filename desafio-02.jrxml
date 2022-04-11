@@ -321,7 +321,7 @@ $F{nivel}.equals("SENIOR")?"S":"P"]]></textFieldExpression>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="47" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<staticText>
 				<reportElement x="351" y="8" width="100" height="30" uuid="256d4267-8fd2-4956-8042-961db8743799"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
