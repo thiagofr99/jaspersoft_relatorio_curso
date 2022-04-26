@@ -46,6 +46,9 @@ NSw1YWYzOWMzYS04NzBhLTRkYjUtYTcyMi04ZTJmNTZiYWZlNTI7]]>
 	<parameter name="UF" class="java.lang.String">
 		<parameterDescription><![CDATA[Insira uma UF]]></parameterDescription>
 	</parameter>
+	<parameter name="IMAGEM_DIRETORIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT jaspercurso.empresas.razao_social,
 	jaspercurso.empresas.cnpj,
@@ -141,7 +144,7 @@ ORDER BY jaspercurso.funcionarios.nome ASC]]>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#00D4FF"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#00D4FF"/>
 				</box>
-				<imageExpression><![CDATA["images/logo-802x50.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{IMAGEM_DIRETORIO}+"images/logo-802x50.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

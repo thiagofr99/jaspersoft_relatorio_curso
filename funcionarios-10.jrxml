@@ -18,6 +18,15 @@
 			<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#DBD9D9"/>
 		</box>
 	</style>
+	<parameter name="SUB_REPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUB_REPORT_PARAM" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMAGEM_DIRETORIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT jaspercurso.funcionarios.id_funcionario,
 	jaspercurso.funcionarios.nome,
@@ -84,7 +93,7 @@ FROM jaspercurso.funcionarios
 		<band height="66" splitType="Stretch">
 			<image>
 				<reportElement mode="Opaque" x="0" y="0" width="572" height="66" backcolor="#00D4FF" uuid="40b4b747-5598-4b96-8b2f-b0c441ee99b4"/>
-				<imageExpression><![CDATA["images/logo-555x50.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{IMAGEM_DIRETORIO}+"images/logo-555x50.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -223,7 +232,10 @@ FROM jaspercurso.funcionarios
 					<subreportParameterExpression><![CDATA[$F{id_funcionario}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["funcionarios-10-subfones.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUB_REPORT_PARAM}!= null 
+?
+$P{SUB_REPORT_PARAM}:
+$P{SUB_REPORT_DIR}+"funcionarios-10-subfones.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="estilo_cores_alternadas" stretchType="ContainerHeight" x="380" y="0" width="120" height="30" uuid="dbbb5850-3986-4f24-a1fd-69a3dff10d25">
